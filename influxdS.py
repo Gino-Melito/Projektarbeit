@@ -21,7 +21,7 @@ ports = {
     # Eingang
     "E4": 1710,  # Außenlampe Haustür
     "Q1": 1700,  # Storen öffnen
-    "Q2": 1701,  # Storen schließen
+    "Q2": 1701,  # Storen schliessen
     # Keller
     "E2": 1711,  # Keller Licht
     # Garage
@@ -160,13 +160,10 @@ def get_b4_temperature():
 
 # Funktion zur Steuerung des Ventils M1 basierend auf dem Sollwert B4
 def control_ventil_m1(sollwert):
-    # Simpler Regelmechanismus: Mehr Öffnung bei großer Abweichung
+    # Simpler Regelmechanismus: Mehr Öffnung bei grosser Abweichung
     venti_offnung = min(1000, max(0, 1000 * (sollwert / 100)))  # Skalierung 1000 = 100%
     sock.sendto(str(int(venti_offnung)).encode(), (UDP_IP, ports["M1"]))
     print(f"Ventil M1 auf {venti_offnung / 10}% geöffnet.")
-
-
-
 
 
 # Haupt-Loop
@@ -229,9 +226,6 @@ try:
                     sock.sendto(temperatur_wert, (UDP_IP, ports[ports_map["temperatur"]]))
                     print(f"Temperatur für {raum_name} gesendet: {temperatur_wert}")
 
-        # Hier sicherstellen, dass E6 nur manuell aktiviert werden kann
-        # Falls du E6 manuell steuern möchtest:
-        # z.B. sock.sendto(b"1", (UDP_IP, ports["E6"]))  # Manuelle Steuerung für Garage Beleuchtung
 
 
 # B4-Wert (Sollwert) aus InfluxDB abfragen
